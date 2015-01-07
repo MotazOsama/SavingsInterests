@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="savingsInterestApp">
 <head>
   <meta charset="utf-8">
   <title>Savings Interest</title>
@@ -13,7 +13,7 @@
   <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="js/app.js"></script>
 </head>
-<body>
+<body ng-controller="calculatorCtr">
   <div class="container-fluid">
     <div class="panel panel-default" id="formPanel">
       <div class="panel-body">
@@ -34,7 +34,7 @@
                   <div class="form-group">
                     <label class="col-sm-6 control-label" for="numOfYears">Years To Invest</label>
                     <div class="col-md-6">
-                      <input type="number" name="numOfYears" id="inputNumOfYears" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                      <input type="number" name="numOfYears" id="inputNumOfYears" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="yearsToInvest" ng-change="changeEvent()">
                     </div>
                   </div>
 
@@ -52,7 +52,7 @@
                   <div class="form-group">
                     <label class="col-sm-6 control-label" for="annualRate">Expected Annual Interest Rate</label>
                     <div class="col-md-6">
-                      <input type="number" name="annualRate" id="inputAnnualRate" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                      <input type="number" name="annualRate" id="inputAnnualRate" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="interestRate">
                     </div>
                   </div>
 
@@ -146,6 +146,38 @@
         </div>
       </div>
     </div>
+
+    <!-- form panel end -->
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th> Year </th>
+              <th> Rate </th>
+              <th> Interest </th>
+              <th> Scheduled <br> Deposits </th>
+
+              <th> Extra Annual <br> Deposits </th>
+              <th> Balance </th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="item in arrayList">
+            <tr>
+              <td> {{ item }} </td>
+              <td>  {{ interestRate }} </td>
+              <td> 0 </td>
+              <td> 0 </td>
+              <td> 0 </td>
+              <td> 0 </td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>
