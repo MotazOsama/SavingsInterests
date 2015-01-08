@@ -44,7 +44,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="number" name="intialInvestment" id="inputIntialInvestment" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                        <input type="number" name="intialInvestment" id="inputIntialInvestment" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="initInvest" ng-change="changeEvent()">
                       </div>
                     </div>
                   </div>
@@ -52,7 +52,10 @@
                   <div class="form-group">
                     <label class="col-sm-6 control-label" for="annualRate">Expected Annual Interest Rate</label>
                     <div class="col-md-6">
-                      <input type="number" name="annualRate" id="inputAnnualRate" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="interestRate">
+                      <div class="input-group">
+                        <div class="input-group-addon">%</div>
+                        <input type="number" name="annualRate" id="inputAnnualRate" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="interestRate" ng-change="changeEvent()">
+                      </div>
                     </div>
                   </div>
 
@@ -65,7 +68,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="number" name="depositAmount" id="inputDepositAmount" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                        <input type="number" name="depositAmount" id="inputDepositAmount" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="depositAmount" ng-change="changeEvent()">
                       </div>
                     </div>
                   </div>
@@ -73,14 +76,14 @@
                   <div class="form-group">
                     <label class="col-sm-6 control-label" for="depositFreq">Deposit Frequency</label>
                     <div class="col-md-6">
-                      <input type="number" name="depositFreq" id="inputDepositFreq" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                      <select name="depositFreq" id="inputDepositFre" class="form-control" ng-options="freq for freq in depositsFreq" ng-model ="depostitFreq" ng-change="changeEvent()"></select>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label class="col-sm-6 control-label" for="addAnualInvest">Additional Annual Investment</label>
                     <div class="col-md-6">
-                      <input type="number" name="addAnualInvest" id="inputAddAnualInvest" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                      <input type="number" name="addAnualInvest" id="inputAddAnualInvest" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="extraAnnualDeposit" ng-change="changeEvent()">
                     </div>
                   </div>
                 </form>
@@ -102,12 +105,12 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="col-sm-6 control-label" for="valueAfterYears">Value After 10 Years</label>
+                    <label class="col-sm-6 control-label" for="valueAfterYears">Value After {{ yearsToInvest }} Years</label>
 
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="number" name="valueAfterYears" id="inputValueAfterYears" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                        <input type="number" name="valueAfterYears" id="inputValueAfterYears" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="futureValue">
                       </div>
                     </div>
                   </div>
@@ -122,7 +125,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="number" name="totalInterested" id="inputtotalInterested" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                        <input type="number" name="totalInterested" id="inputtotalInterested" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="totalInvested">
                       </div>
                     </div>
                   </div>
@@ -134,7 +137,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="number" name="interestedEarned" id="inputInterestedEarned" class="form-control" value="" min="0" max="" step="1" required="required" title="">
+                        <input type="number" name="interestedEarned" id="inputInterestedEarned" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="totalInterest">
                       </div>
                     </div>
                   </div>
@@ -163,15 +166,14 @@
               <th> Balance </th>
             </tr>
           </thead>
-          <tbody ng-repeat="item in arrayList">
+          <tbody ng-repeat="obj in arrayList">
             <tr>
-              <td> {{ item }} </td>
-              <td>  {{ interestRate }} </td>
-              <td> 0 </td>
-              <td> 0 </td>
-              <td> 0 </td>
-              <td> 0 </td>
-              
+              <td> {{ obj.id }} </td>
+              <td> {{ obj.rate }}%</td>
+              <td> ${{ obj.interest }} </td>
+              <td> ${{ obj.depositAmount }} </td>
+              <td> ${{ obj.extraAnnualDeposit }} </td>
+              <td> ${{ obj.balance }} </td>
             </tr>
           </tbody>
         </table>
