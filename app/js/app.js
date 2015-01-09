@@ -26,7 +26,7 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 	}];
 
 	$scope.changeEvent = function(){
-		if ($scope.yearsToInvest) {		
+		if ($scope.yearsToInvest > 0) {		
 			$scope.number = $scope.yearsToInvest;
 			if($scope.depostitFreq == $scope.depositsFreq[0]){
 				$scope.calculateAnnualChange();
@@ -80,11 +80,13 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 	}
 
 	$scope.adjustDataForBalanceGraph = function () {
-		$scope.exampleData[0]["values"] = [];
+		$scope.exampleData= [];
+		data = [];
 		for (var i = 1; i < $scope.number; i++) {
 			point = [$scope.arrayList[i].id , $scope.arrayList[i].balance ] 
-			$scope.exampleData[0]["values"].push(point);
+			data.push(point)
 		}
+		$scope.exampleData.push({key: "balance", values: data});
 		console.log($scope.exampleData[0]);
 
 	}
@@ -95,4 +97,6 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 
 
 });
+
+
 

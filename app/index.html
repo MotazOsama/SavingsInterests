@@ -159,62 +159,56 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="panel panel-default ">
+        <div class="panel-body" >
+          <nvd3-cumulative-line-chart
+          data="exampleData"
+          id="exampleId"
+          showXAxis="true"
+          showYAxis="true"
+          tooltips="true"
+          interactive="true"
+          yAxisTickFormat="yAxisTickFormatFunction()"
+          xAxisTickFormat="xAxisTickFormatFunction()"
+          margin="{left:70,right:25}">
+          <svg></svg>
+        </nvd3-cumulative-line-chart>
+      </div>
+    </div>
 
-    <div class="panel panel-default">
-      <div class="panel-body col-md-6" >
-        <nvd3-cumulative-line-chart
-        data="exampleData"
-        id="exampleId"
-        width="650"
-        height="400"
-        showXAxis="true"
-        showYAxis="true"
-        tooltips="true"
-        interactive="true"
-        yAxisTickFormat="yAxisTickFormatFunction()"
-        xAxisTickFormat="xAxisTickFormatFunction()"
-        margin="{left:70,top:70,bottom:70,right:125}">
-        <svg></svg>
-      </nvd3-cumulative-line-chart>
+  </div>
+
+
+
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th> Year </th>
+            <th> Rate </th>
+            <th> Interest </th>
+            <th> Scheduled <br> Deposits </th>
+
+            <th> Extra Annual <br> Deposits </th>
+            <th> Balance </th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="obj in arrayList">
+          <tr>
+            <td> {{ obj.id }} </td>
+            <td> {{ obj.rate }}%</td>
+            <td> ${{ obj.interest }} </td>
+            <td> ${{ obj.depositAmount }} </td>
+            <td> ${{ obj.extraAnnualDeposit }} </td>
+            <td> ${{ obj.balance }} </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <div class="panel panel-default col-md-6">
-    <div class="panel-body">
-     Basic panel example
-   </div>
- </div>
-
-
-
-
- <div class="panel panel-default">
-  <div class="panel-body">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th> Year </th>
-          <th> Rate </th>
-          <th> Interest </th>
-          <th> Scheduled <br> Deposits </th>
-
-          <th> Extra Annual <br> Deposits </th>
-          <th> Balance </th>
-        </tr>
-      </thead>
-      <tbody ng-repeat="obj in arrayList">
-        <tr>
-          <td> {{ obj.id }} </td>
-          <td> {{ obj.rate }}%</td>
-          <td> ${{ obj.interest }} </td>
-          <td> ${{ obj.depositAmount }} </td>
-          <td> ${{ obj.extraAnnualDeposit }} </td>
-          <td> ${{ obj.balance }} </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 
 </div>
 </body>
