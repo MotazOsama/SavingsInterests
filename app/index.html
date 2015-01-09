@@ -11,10 +11,19 @@
   <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
+  
+  <script src="bower_components/d3/d3.js"></script>
+  <script src="bower_components/nvd3/nv.d3.js"></script>
+  <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+  <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css"/>
+
+
   <script src="js/app.js"></script>
 </head>
 <body ng-controller="calculatorCtr">
   <div class="container-fluid">
+
+
     <div class="panel panel-default" id="formPanel">
       <div class="panel-body">
         <center>
@@ -150,36 +159,63 @@
       </div>
     </div>
 
-    <!-- form panel end -->
 
     <div class="panel panel-default">
-      <div class="panel-body">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th> Year </th>
-              <th> Rate </th>
-              <th> Interest </th>
-              <th> Scheduled <br> Deposits </th>
-
-              <th> Extra Annual <br> Deposits </th>
-              <th> Balance </th>
-            </tr>
-          </thead>
-          <tbody ng-repeat="obj in arrayList">
-            <tr>
-              <td> {{ obj.id }} </td>
-              <td> {{ obj.rate }}%</td>
-              <td> ${{ obj.interest }} </td>
-              <td> ${{ obj.depositAmount }} </td>
-              <td> ${{ obj.extraAnnualDeposit }} </td>
-              <td> ${{ obj.balance }} </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div class="panel-body col-md-6" >
+        <nvd3-cumulative-line-chart
+        data="exampleData"
+        id="exampleId"
+        width="650"
+        height="400"
+        showXAxis="true"
+        showYAxis="true"
+        tooltips="true"
+        interactive="true"
+        yAxisTickFormat="yAxisTickFormatFunction()"
+        xAxisTickFormat="xAxisTickFormatFunction()"
+        margin="{left:70,top:70,bottom:70,right:125}">
+        <svg></svg>
+      </nvd3-cumulative-line-chart>
     </div>
-
   </div>
+
+  <div class="panel panel-default col-md-6">
+    <div class="panel-body">
+     Basic panel example
+   </div>
+ </div>
+
+
+
+
+ <div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th> Year </th>
+          <th> Rate </th>
+          <th> Interest </th>
+          <th> Scheduled <br> Deposits </th>
+
+          <th> Extra Annual <br> Deposits </th>
+          <th> Balance </th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="obj in arrayList">
+        <tr>
+          <td> {{ obj.id }} </td>
+          <td> {{ obj.rate }}%</td>
+          <td> ${{ obj.interest }} </td>
+          <td> ${{ obj.depositAmount }} </td>
+          <td> ${{ obj.extraAnnualDeposit }} </td>
+          <td> ${{ obj.balance }} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
 </body>
 </html>
