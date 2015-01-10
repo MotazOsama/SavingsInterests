@@ -27,6 +27,7 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 				$scope.futureValue = $scope.arrayList[$scope.number].balance;
 				$scope.calculateTotalInvestedValue();
 				$scope.calculateInterestEarned();
+				$scope.drawChart();
 			}
 		}
 	}
@@ -51,6 +52,7 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 			obj.depositAmount = $scope.depositAmount;
 			obj.extraAnnualDeposit = $scope.extraAnnualDeposit;
 			obj.balance = 	$scope.arrayList[i-1].balance + obj.interest +obj.depositAmount +  obj.extraAnnualDeposit;	
+			obj.cumulativeContrib =  $scope.arrayList[i-1].balance + obj.depositAmount
 			$scope.arrayList.push(obj);					
 		}
 		
@@ -72,7 +74,55 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 		$scope.totalInterest = total;
 	}
 
-	
+	$scope.flag= true;
+	$scope.drawChart = function () {
+		var ctx = document.getElementById("myChart").getContext("2d");
+
+		var data ={ labels:[] , datasets: []}; 
+		
+		for (var i = 0; i <= $scope.yearsToInvest; i++) {
+			data.labels.push(i+"");
+		}
+
+		var balancePoints = [];
+		for (var i = 0; i <= $scope.yearsToInvest; i++) {
+			balancePoints.push($scope.arrayList[i].balance);
+		}
+
+		var cumulativeContribPoints = [];
+		for (var i = 0; i <= $scope.yearsToInvest; i++) {
+			cumulativeContribPoints.push($scope.arrayList[0].balance +(i * $scope.arrayList[i].depositAmount));
+		}
+
+		datasetObjForBalance = {
+			label: "Balance",
+			fillColor: "rgba(220,220,220,0.2)",
+			strokeColor: "rgba(0,0,255,1)",
+			pointColor: "rgba(0,0,0,1)",
+			// pointStrokeColor: "#fff",
+			// pointHighlightFill: "#fff",
+			pointHighlightStroke: "rgba(220,220,220,1)",
+			data: balancePoints
+		}
+
+		data.datasets.push(datasetObjForBalance);
+
+		datasetObjForCumulativeContrib = {
+			label: "Cumulative Contribution",
+			fillColor: "rgba(220,220,220,0.2)",
+			strokeColor: "rgba(255,0,0,1)",
+			pointColor: "rgba(0,0,0,1)",
+			// pointStrokeColor: "#fff",
+			// pointHighlightFill: "#fff",
+			pointHighlightStroke: "rgba(220,220,220,1)",
+			data: cumulativeContribPoints
+		}
+
+		data.datasets.push(datasetObjForCumulativeContrib);
+
+
+		$scope.myNewChart = new Chart(ctx).Line(data);
+	}
 
 	/*** first call ***/ 
 	$scope.changeEvent();
