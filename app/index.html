@@ -178,11 +178,11 @@
           <tbody ng-repeat="obj in arrayList">
             <tr>
               <td> {{ obj.id }} </td>
-              <td> {{ obj.rate }}%</td>
-              <td> ${{ obj.interest }} </td>
-              <td> ${{ obj.depositAmount }} </td>
-              <td> ${{ obj.extraAnnualDeposit }} </td>
-              <td> ${{ obj.balance }} </td>
+              <td> {{ formatCurrancy(obj.rate) }}%</td>
+              <td> {{ obj.interest | currency}} </td>
+              <td> {{ obj.depositAmount | currency }} </td>
+              <td> {{ obj.extraAnnualDeposit | currency }} </td>
+              <td> {{ obj.balance | currency }} </td>
             </tr>
           </tbody>
         </table>
