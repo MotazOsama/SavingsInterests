@@ -3,7 +3,7 @@
 *
 * Description
 */
-var savingsInterestApp = angular.module('savingsInterestApp', []); 
+var savingsInterestApp = angular.module('savingsInterestApp', ['fiestah.money']); 
 
 savingsInterestApp.controller('calculatorCtr', function($scope){
 
