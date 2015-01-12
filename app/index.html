@@ -172,7 +172,6 @@
               <th> Interest </th>
               <th> Scheduled <br> Deposits </th>
 
-              <th> Extra Annual <br> Deposits </th>
               <th> Balance </th>
             </tr>
           </thead>
@@ -182,7 +181,6 @@
               <td> {{ obj.rate | number:2 }}%</td>
               <td> {{ obj.interest | currency}} </td>
               <td> {{ obj.depositAmount | currency }} </td>
-              <td> {{ obj.extraAnnualDeposit | currency }} </td>
               <td> {{ obj.balance | currency }} </td>
             </tr>
           </tbody>

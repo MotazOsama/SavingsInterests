@@ -76,8 +76,8 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 			var r, c, pv = 0.0; 
 			r = (obj.rate/100)/$scope.factor; 
 			c = $scope.depositAmount; 
-			pv = $scope.initInvest;
-			nper = i*$scope.factor;
+			pv = $scope.arrayList[i-1].balance;
+			nper = $scope.factor;
 			var fv = 0.0;
 
 			fv = $scope.calculateFutureValue(r, nper, c, pv);
@@ -87,8 +87,8 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 
 			obj.cumulativeContrib =  $scope.arrayList[i-1].balance + obj.depositAmount;
 
-			obj.balance = obj.interest + obj.depositAmount +$scope.arrayList[i-1].balance ;
-
+			obj.balance = obj.interest + obj.depositAmount +$scope.arrayList[i-1].balance +obj.extraAnnualDeposit;
+			obj.depositAmount += obj.extraAnnualDeposit;
 			$scope.arrayList.push(obj);					
 		}
 		
