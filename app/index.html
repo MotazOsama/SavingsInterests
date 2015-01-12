@@ -13,6 +13,7 @@
   <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="bower_components/chartJS/Chart.js" ></script>
   <script src="bower_components/angular-money-directive/angular-money-directive.js"></script>
+  <script src="bower_components/ng-currency/dist/ng-currency.js"></script>
   <script src="js/app.js"></script>
 
 </head>
@@ -47,7 +48,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="text" name="intialInvestment" id="inputIntialInvestment" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="initInvest" ng-change="changeEvent()" money>
+                        <input type="text" name="intialInvestment" id="inputIntialInvestment" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="initInvest" ng-change="changeEvent()" ng-currency>
                       </div>
                     </div>
                   </div>
@@ -71,7 +72,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="text" name="depositAmount" id="inputDepositAmount" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="depositAmount" ng-change="changeEvent()" money>
+                        <input type="text" name="depositAmount" id="inputDepositAmount" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="depositAmount" ng-change="changeEvent()" ng-currency>
                       </div>
                     </div>
                   </div>
@@ -86,7 +87,7 @@
                   <div class="form-group">
                     <label class="col-sm-6 control-label" for="addAnualInvest">Additional Annual Investment</label>
                     <div class="col-md-6">
-                      <input type="text" name="addAnualInvest" id="inputAddAnualInvest" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="extraAnnualDeposit" ng-change="changeEvent()" money>
+                      <input type="text" name="addAnualInvest" id="inputAddAnualInvest" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="extraAnnualDeposit" ng-change="changeEvent()" ng-currency>
                     </div>
                   </div>
                 </form>
@@ -113,7 +114,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="text" name="valueAfterYears" id="inputValueAfterYears" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="futureValue" money>
+                        <input type="text" name="valueAfterYears" id="inputValueAfterYears" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="futureValue" ng-currency>
                       </div>
                     </div>
                   </div>
@@ -128,7 +129,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="text" name="totalInterested" id="inputtotalInterested" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="totalInvested" money>
+                        <input type="text" name="totalInterested" id="inputtotalInterested" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="totalInvested" ng-currency>
                       </div>
                     </div>
                   </div>
@@ -140,7 +141,7 @@
                     <div class="col-md-6">
                       <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="text" name="interestedEarned" id="inputInterestedEarned" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="totalInterest" money>
+                        <input type="text" name="interestedEarned" id="inputInterestedEarned" class="form-control" value="" min="0" max="" step="1" required="required" title="" ng-model="totalInterest" ng-currency>
                       </div>
                     </div>
                   </div>
@@ -178,7 +179,7 @@
           <tbody ng-repeat="obj in arrayList">
             <tr>
               <td> {{ obj.id }} </td>
-              <td> {{ formatCurrancy(obj.rate) }}%</td>
+              <td> {{ obj.rate | number:2 }}%</td>
               <td> {{ obj.interest | currency}} </td>
               <td> {{ obj.depositAmount | currency }} </td>
               <td> {{ obj.extraAnnualDeposit | currency }} </td>
