@@ -8,7 +8,7 @@ var savingsInterestApp = angular.module('savingsInterestApp', []);
 savingsInterestApp.controller('calculatorCtr', function($scope){
 
 	$scope.arrayList = [];
-	$scope.depositsFreq = ["Annualy","Monthly"]
+	$scope.depositsFreq = ["Annually","Monthly","Semi-Annually", "Quarterly","Bi-Monthly","Semi-Monthly", "Bi-Weekly", "Weekly", "Daily"]
 	$scope.depostitFreq = $scope.depositsFreq[0];
 	$scope.yearsToInvest = 2;
 	$scope.equationResult = $scope.yearsToInvest * 3;
@@ -23,15 +23,31 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 		if ($scope.yearsToInvest) {		
 			$scope.number = $scope.yearsToInvest;
 			if($scope.depostitFreq == $scope.depositsFreq[0]){
-				// deposit frequency = annual
-				$scope.calculateAnnualChange();
+				$scope.factor =1 ;
 			} else if ($scope.depostitFreq == $scope.depositsFreq[1]){
-				$scope.calculateMonthlyChange();				
-			}
+				$scope.factor =12 ;
+			} else if ($scope.depostitFreq == $scope.depositsFreq[2]){
+				$scope.factor =2 ;
+			}else if ($scope.depostitFreq == $scope.depositsFreq[3]){
+				$scope.factor =4 ;
+			} else if ($scope.depostitFreq == $scope.depositsFreq[4]){
+				$scope.factor = 6;
+			} else if ($scope.depostitFreq == $scope.depositsFreq[5]){
+				$scope.factor = 24;
+			} else if ($scope.depostitFreq == $scope.depositsFreq[6]){
+				$scope.factor = 26;
+			} else if ($scope.depostitFreq == $scope.depositsFreq[7]){
+				$scope.factor = 52;
+			} else if ($scope.depostitFreq == $scope.depositsFreq[8]){
+				$scope.factor = 365;
+			} 
+			$scope.calculateChange();
 			$scope.futureValue = $scope.arrayList[$scope.number].balance;
 			$scope.calculateTotalInvestedValue();
 			$scope.calculateInterestEarned();
+			$scope.roundNumbers();
 			$scope.drawChart();
+
 		}
 	}
 
@@ -47,38 +63,7 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 		$scope.arrayList.push(obj);
 	}
 
-	$scope.calculateAnnualChange = function (){
-		$scope.init();
-		for (var i = 1; i <= $scope.number; i++) {
-			obj = {}; 
-			obj.id = i;
-			obj.rate = $scope.interestRate;	
-			obj.depositAmount = $scope.depositAmount;
-			obj.extraAnnualDeposit = $scope.extraAnnualDeposit;
-			obj.balance = 0; 
-			
-			// calculate future value. 
-			var r, c, pv = 0.0; 
-			r = obj.rate/100; 
-			c = obj.depositAmount; 
-			pv = $scope.initInvest;
-			nper = i;
-			var fv = 0.0;
-
-			fv = $scope.calculateFutureValue(r, nper, c, pv);
-			
-			obj.balance = fv;
-
-			obj.interest = fv - $scope.arrayList[i-1].balance - obj.depositAmount;
-
-			obj.cumulativeContrib =  $scope.arrayList[i-1].balance + obj.depositAmount
-
-			$scope.arrayList.push(obj);					
-		}
-		
-	}
-
-	$scope.calculateMonthlyChange = function () {
+	$scope.calculateChange = function () {
 		$scope.init();
 		for (var i = 1; i <= $scope.number; i++) {
 			obj = {}; 
@@ -89,24 +74,26 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 			
 			// calculate future value. 
 			var r, c, pv = 0.0; 
-			r = (obj.rate/100)/12; 
+			r = (obj.rate/100)/$scope.factor; 
 			c = $scope.depositAmount; 
 			pv = $scope.initInvest;
-			nper = i*12;
+			nper = i*$scope.factor;
 			var fv = 0.0;
 
 			fv = $scope.calculateFutureValue(r, nper, c, pv);
 			
-			obj.balance = fv;
-			obj.depositAmount = c * 12;
+			obj.depositAmount = c * $scope.factor;
 			obj.interest = fv - $scope.arrayList[i-1].balance - obj.depositAmount;
 
-			obj.cumulativeContrib =  $scope.arrayList[i-1].balance + obj.depositAmount
+			obj.cumulativeContrib =  $scope.arrayList[i-1].balance + obj.depositAmount;
+
+			obj.balance = obj.interest + obj.depositAmount +$scope.arrayList[i-1].balance ;
 
 			$scope.arrayList.push(obj);					
 		}
 		
 	}
+
 
 	$scope.calculateFutureValue = function (r, nper, c, pv) {
 		return (c * (Math.pow((1 + r), nper) - 1) / r + pv * Math.pow((1 + r), nper));
@@ -117,7 +104,7 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 		for (var i = 1; i <= $scope.yearsToInvest; i++) {
 			total += $scope.arrayList[i].depositAmount;
 		}
-		$scope.totalInvested = total + $scope.initInvest;
+		$scope.totalInvested = Math.round((total + $scope.initInvest)*100)/100;
 	}
 
 	$scope.calculateInterestEarned = function (){
@@ -125,7 +112,7 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 		for (var i = 1; i <= $scope.yearsToInvest; i++) {
 			total += $scope.arrayList[i].interest;
 		}
-		$scope.totalInterest = total;
+		$scope.totalInterest = Math.round((total)*100)/100;
 	}
 
 	$scope.flag= true;
@@ -176,6 +163,14 @@ savingsInterestApp.controller('calculatorCtr', function($scope){
 
 
 		$scope.myNewChart = new Chart(ctx).Line(data);
+	}
+
+	$scope.roundNumbers = function () {
+		for (var i = 1; i <= $scope.number; i++) {
+			var obj = $scope.arrayList[i]; 
+			obj.interest = Math.round(obj.interest * 100) /100;
+			obj.balance = Math.round(obj.balance * 100) /100;
+		};
 	}
 
 	/*** first call ***/ 
